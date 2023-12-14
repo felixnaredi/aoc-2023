@@ -27,11 +27,10 @@ for line in input.splitlines():
     else:
         game.append((6, keys, hand, bet))
 
-with open("temp.txt", "w") as file:
-    acc = 0
-    for i, (type, keys, hand, bet) in enumerate(sorted(game, reverse=True)):    
-        acc += (i + 1) * int(bet)
-        print(i + 1, acc, (type, keys, hand, bet), file=file)
+acc = 0
+for i, (type, keys, hand, bet) in enumerate(sorted(game, reverse=True)):    
+    acc += (i + 1) * int(bet)
+    # print(i + 1, acc, (type, keys, hand, bet))
 
 print(acc)
 
@@ -53,13 +52,6 @@ for line in input.splitlines():
     j = count["J"]
     count["J"] = 0
 
-    if hand == "AA9J9":
-        print(j)
-        print(max(count.values()) + j)
-        print(len([x for x in count.values() if x == 2]) == 2)
-        print(max(count.values()) == 3 + j and len([x for x in count.values() if x == 2]) == 2)
-
-
     if max(count.values()) + j == 5:
         game.append((0, keys, hand, bet))
     elif max(count.values()) + j == 4:
@@ -77,10 +69,9 @@ for line in input.splitlines():
     else:
         game.append((6, keys, hand, bet))
 
-with open("temp.txt", "w") as file:
-    acc = 0
-    for i, (type, keys, hand, bet) in enumerate(sorted(game, reverse=True)):    
-        acc += (i + 1) * int(bet)
-        print(i + 1, acc, (type, keys, hand, bet), file=file)
+acc = 0
+for i, (type, keys, hand, bet) in enumerate(sorted(game, reverse=True)):    
+    acc += (i + 1) * int(bet)
+    # print(i + 1, acc, (type, keys, hand, bet), file=file)
 
 print(acc)

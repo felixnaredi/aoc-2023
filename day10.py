@@ -31,10 +31,14 @@ for (py, px), c in terrain.items():
             edges.append((py + dy, px + dx))
         graph[(py, px)] = edges
 
-queue = [(p0[0] + 1, p0[1])]
-goal = (p0[0] - 1, p0[1])
+# NOTE:
+#   Adjust `start` and `goal` depending on the input.
+#
+start = p0[0] + 1, p0[1]
+goal = p0[0] - 1, p0[1]
+queue = [start]
 back = {}
-distance = {(p0[0] + 1, p0[1]): 1}
+distance = {start: 1}
 visited = set()
 
 while len(queue) > 0:
@@ -93,6 +97,9 @@ for (py, px), c in terrain.items():
             edges.append((py + dy, px + dx))
         graph[(py, px)] = edges
 
+# NOTE:
+#   Adjust `start` and `goal` depending on the input.
+#
 start = (p0[0] + 1, p0[1])
 goal = (p0[0] - 1, p0[1])
 queue = [start]
@@ -119,6 +126,9 @@ while len(queue) > 0:
                 distance[(qy, qx)] = distance[(py, px)] + 1
                 back[(qy, qx)] = (py, px)
 
+# NOTE:
+#   Replace S with a pipe depending on the input.
+#
 terrain[p0] = "|"
 
 loop = set()
