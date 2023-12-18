@@ -5,21 +5,21 @@ SIZE = 1000
 ground = [[0 for _ in range(SIZE)] for _ in range(SIZE)]
 py, px = 250, 250
 for line in input.splitlines():
-    d, w, _ = line.split(" ")
+    dir, w, _ = line.split(" ")
     w = int(w)
-    if d == "U":
+    if dir == "U":
         for _ in range(w):
             ground[py][px] = 1
             py -= 1
-    if d == "D":
+    elif dir == "D":
         for _ in range(w):
             ground[py][px] = 1
             py += 1
-    if d == "L":
+    elif dir == "L":
         for _ in range(w):
             ground[py][px] = 1
             px -= 1
-    if d == "R":
+    elif dir == "R":
         for _ in range(w):
             ground[py][px] = 1
             px += 1
@@ -44,7 +44,6 @@ while len(queue) != 0:
 
 # for row in ground:
 #     print("".join(("." if c == 0 else "#" for c in row)))
-#     print(row)
 
 print(sum((sum(row) for row in ground)))
 
@@ -57,17 +56,17 @@ py, px = 0, 0
 for line in input.splitlines():
     _, _, hex = line.split(" ")
     w = int(hex[2 : -2], 16)
-    d = int(hex[-2], 16)
-    if d == 0:
+    dir = int(hex[-2], 16)
+    if dir == 0:
         points.append(((py, px), (py, px + w)))
         py, px = py, px + w
-    if d == 1:
+    elif dir == 1:
         points.append(((py, px), (py + w, px)))
         py, px = py + w, px
-    if d == 2:
+    elif dir == 2:
         points.append(((py, px), (py, px - w)))
         py, px = py, px - w
-    if d == 3:
+    elif dir == 3:
         points.append(((py, px), (py - w, px)))
         py, px = py - w, px
 
