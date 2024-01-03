@@ -37,3 +37,51 @@ print(acc)
 # %% Second Star
 # ------------------------------------------------------------------------------
 
+# I had to look up the solution for this star :(
+
+class Done(Exception):
+    pass
+
+garden = input.splitlines()
+start = None
+n, m = len(garden), len(garden[0])
+try:
+    for y in range(n):
+        for x in range(m):
+            if garden[y][x] == "S":
+                start = y, x
+                garden[y] = garden[y].replace("S", ".")
+                raise Done
+except Done:
+    pass
+
+steps = 26501365
+modulo_counts = []
+d = 0
+boundry = [start]
+res = None
+
+while True:
+    if d == steps:
+        res = len(boundry)
+        break
+    if len(modulo_counts) == 3:
+        a0, a1, a2 = modulo_counts
+        b0 = a0
+        b1 = a1 - a0
+        b2 = a2 - a1
+        c = steps // n
+        res = b0 + b1 * c + (c * (c - 1) // 2) * (b2 - b1)
+        break
+    d += 1
+    new_boundry = set()
+    for y, x in boundry:
+        new_boundry.add((y - 1, x))
+        new_boundry.add((y + 1, x))
+        new_boundry.add((y, x - 1))
+        new_boundry.add((y, x + 1))
+    boundry = [(y, x) for y, x in new_boundry if garden[y % n][x % m] != "#"]
+    if d % n == steps % n:
+        modulo_counts.append(len(boundry))
+
+print(res)
