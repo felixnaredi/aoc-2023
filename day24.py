@@ -54,3 +54,29 @@ print(acc)
 # %% Second Star
 # ------------------------------------------------------------------------------
 
+# I had to look up the solution for this star :(
+
+# NOTE:
+#   This solution is using z3, to install the dependency.
+#   `pip install z3-solver`
+
+import z3
+
+R = []
+for line in input.splitlines():
+    pos, vel = line.split("@")
+    pos = [int(p) for p in pos.split(", ")]
+    vel = [int(v) for v in vel.split(", ")]
+    R.append((*pos, *vel))
+
+x, y, z, vx, vy, vz = z3.Real("x"), z3.Real("y"), z3.Real("z"), z3.Real("dx"), z3.Real("dy"), z3.Real("dz")
+T = [z3.Real(f"T{i}") for i in range(len(R))]
+solver = z3.Solver()
+for i in range(len(R)):
+    solver.add(x + T[i] * vx - R[i][0] - T[i] * R[i][3] == 0)
+    solver.add(y + T[i] * vy - R[i][1] - T[i] * R[i][4] == 0)
+    solver.add(z + T[i] * vz - R[i][2] - T[i] * R[i][5] == 0)
+res = solver.check()
+model = solver.model()
+
+print(model.eval(x + y + z))
